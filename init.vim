@@ -316,7 +316,7 @@ augroup END
 " Commenting blocks of code.
 augroup commenting_blocks_of_code
   autocmd!
-  autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
+  autocmd FileType c,cpp,java,rust  let b:comment_leader = '// '
   autocmd FileType sh,ruby,python   let b:comment_leader = '# '
   autocmd FileType conf,fstab       let b:comment_leader = '# '
   autocmd FileType tex              let b:comment_leader = '% '
