@@ -12,7 +12,7 @@ endif
 
 let g:vim_bootstrap_langs = "c"
 let g:vim_bootstrap_editor = "nvim"				" nvim or vim
-let g:vim_bootstrap_theme = "gruvbox"
+let g:vim_bootstrap_theme = "codedark"
 let g:vim_bootstrap_frams = ""
 
 if !filereadable(vimplug_exists)
@@ -49,8 +49,8 @@ Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'editor-bootstrap/vim-bootstrap-updater'
 Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
-"Plug 'tomasiser/vim-code-dark'
-Plug 'morhetz/gruvbox'
+Plug 'tomasiser/vim-code-dark'
+"Plug 'morhetz/gruvbox'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -146,10 +146,9 @@ let g:session_command_aliases = 1
 "*****************************************************************************
 syntax on
 set ruler
-set number
 
 let no_buffers_menu=1
-colorscheme gruvbox 
+colorscheme codedark
 
 
 " Better command line completion 
