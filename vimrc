@@ -1,9 +1,9 @@
-" vim-bootstrap 2022-03-13 15:27:41
+" vim-bootstrap 2022-03-30 09:24:38
 
 "*****************************************************************************
 "" Vim-Plug core
 "*****************************************************************************
-let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
+let vimplug_exists=expand('~/.vim/autoload/plug.vim')
 if has('win32')&&!has('win64')
   let curl_exists=expand('C:\Windows\Sysnative\curl.exe')
 else
@@ -11,7 +11,7 @@ else
 endif
 
 let g:vim_bootstrap_langs = "c"
-let g:vim_bootstrap_editor = "nvim"				" nvim or vim
+let g:vim_bootstrap_editor = "vim"				" nvim or vim
 let g:vim_bootstrap_theme = "codedark"
 let g:vim_bootstrap_frams = ""
 
@@ -29,7 +29,7 @@ if !filereadable(vimplug_exists)
 endif
 
 " Required:
-call plug#begin(expand('~/.config/nvim/plugged'))
+call plug#begin(expand('~/.vim/plugged'))
 
 "*****************************************************************************
 "" Plug install packages
@@ -88,8 +88,8 @@ Plug 'ludwig/split-manpage.vim'
 "*****************************************************************************
 
 "" Include user's extra bundle
-if filereadable(expand("~/.config/nvim/local_bundles.vim"))
-  source ~/.config/nvim/local_bundles.vim
+if filereadable(expand("~/.vimrc.local.bundles"))
+  source ~/.vimrc.local.bundles
 endif
 
 call plug#end()
@@ -105,7 +105,7 @@ filetype plugin indent on
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
-
+set ttyfast
 
 "" Fix backspace indent
 set backspace=indent,eol,start
@@ -115,8 +115,6 @@ set tabstop=4
 set softtabstop=0
 set shiftwidth=4
 set expandtab
-set relativenumber
-set cino=(0:0
 
 "" Map leader to ,
 let mapleader=','
@@ -139,7 +137,7 @@ else
 endif
 
 " session management
-let g:session_directory = "~/.config/nvim/session"
+let g:session_directory = "~/.vim/session"
 let g:session_autoload = "no"
 let g:session_autosave = "no"
 let g:session_command_aliases = 1
@@ -149,7 +147,7 @@ let g:session_command_aliases = 1
 "*****************************************************************************
 syntax on
 set ruler
-set number
+set relativenumber
 
 let no_buffers_menu=1
 colorscheme codedark
@@ -176,20 +174,31 @@ else
 
   " IndentLine
   let g:indentLine_enabled = 1
-  let g:indentLine_concealcursor = 0
+  let g:indentLine_concealcursor = ''
   let g:indentLine_char = '┆'
   let g:indentLine_faster = 1
 
 
+  if $COLORTERM == 'gnome-terminal'
+    set term=gnome-256color
+  else
+    if $TERM == 'xterm'
+      set term=xterm-256color
+    endif
+  endif
+
 endif
 
+
+if &term =~ '256color'
+  set t_ut=
+endif
 
 
 "" Disable the blinking cursor.
 set gcr=a:blinkon0
 
-au TermEnter * setlocal scrolloff=0
-au TermLeave * setlocal scrolloff=3
+set scrolloff=3
 
 
 "" Status bar
@@ -215,9 +224,7 @@ if exists("*fugitive#statusline")
 endif
 
 " vim-airline
-"let g:airline_theme = 'powerlineish'
 let g:airline_theme = 'luna'
-"let g:airline_solarized_bg = 'dark'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -242,6 +249,7 @@ let g:gitgutter_sign_modified_removed = 'ww'
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=1
 
+
 "*****************************************************************************
 "" Abbreviations
 "*****************************************************************************
@@ -261,13 +269,14 @@ cnoreabbrev Qall qall
 " Start NERDTree an leave the cursor in it.
 autocmd VimEnter * NERDTree
 
+"" NERDTree configuration
 let g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['node_modules','\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
 let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 37
+let g:NERDTreeWinSize = 50
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite,*node_modules/
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 nnoremap <silent> <F3> :NERDTreeToggle<CR>
@@ -287,22 +296,6 @@ nnoremap <silent> <leader>sh :terminal<CR>
 "*****************************************************************************
 " remove trailing whitespaces
 command! FixWhitespace :%s/\s\+$//e
-
-" Highlight trailing white spaces
-highlight ExtraWhitespace ctermbg=darkred guibg=#382424
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-
-" Highlight long lines
-highlight OverLength ctermbg=green ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
-autocmd BufWinEnter * match OverLength /\%81v.\+/
-autocmd InsertEnter * match OverLength /\%81v.\+/
-autocmd InsertLeave * match OverLength /\%81v.\+/
-autocmd BufWinLeave * call clearmatches()
 
 "*****************************************************************************
 "" Functions
@@ -484,8 +477,8 @@ autocmd FileType cpp setlocal tabstop=4 shiftwidth=4 expandtab
 "*****************************************************************************
 
 "" Include user's local vim config
-if filereadable(expand("~/.config/nvim/local_init.vim"))
-  source ~/.config/nvim/local_init.vim
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
 endif
 
 "*****************************************************************************
@@ -508,9 +501,7 @@ if !exists('g:airline_powerline_fonts')
   let g:airline#extensions#readonly#symbol   = '⊘'
   let g:airline#extensions#linecolumn#prefix = '¶'
   let g:airline#extensions#paste#symbol      = 'ρ'
-  "let g:airline_symbols.linenr    = '␊'
-  let g:airline_symbols.colnr = '  ㏇:'
-  let g:airline_symbols.linenr = ' '
+  let g:airline_symbols.linenr    = '␊'
   let g:airline_symbols.branch    = '⎇'
   let g:airline_symbols.paste     = 'ρ'
   let g:airline_symbols.paste     = 'Þ'
@@ -519,8 +510,6 @@ if !exists('g:airline_powerline_fonts')
 else
   let g:airline#extensions#tabline#left_sep = ''
   let g:airline#extensions#tabline#left_alt_sep = ''
-
-  " let g:airline_theme = 'solarized'
 
   " powerline symbols
   let g:airline_left_sep = ''
@@ -531,4 +520,3 @@ else
   let g:airline_symbols.readonly = ''
   let g:airline_symbols.linenr = ''
 endif
-
