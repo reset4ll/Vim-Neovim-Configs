@@ -1,2 +1,2 @@
-# neovim_config
-Configuración de Neovim
+# Vim / Neovim -- Configs
+Configuración Vim / Neovim
