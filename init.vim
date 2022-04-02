@@ -47,12 +47,13 @@ Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
-"Plug 'editor-bootstrap/vim-bootstrap-updater'
+Plug 'editor-bootstrap/vim-bootstrap-updater'
 Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
 Plug 'tomasiser/vim-code-dark'
 Plug 'frazrepo/vim-rainbow'
 Plug 'airblade/vim-gitgutter'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'rust-lang/rust.vim'
 "Plug 'morhetz/gruvbox'
 
 if isdirectory('/usr/local/opt/fzf')
@@ -119,7 +120,7 @@ set relativenumber
 set cino=(0:0
 
 "" Map leader to ,
-let mapleader=','
+let mapleader=' '
 
 "" Enable hidden buffers
 set hidden
@@ -147,7 +148,7 @@ let g:session_command_aliases = 1
 "*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
-syntax on
+syntax enable
 set ruler
 set number
 
