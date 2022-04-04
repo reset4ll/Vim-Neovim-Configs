@@ -158,6 +158,7 @@ set ruler
 set number
 
 let no_buffers_menu=1
+let g:codedark_italics = 1 "Coloca los comentarios en itálica
 colorscheme codedark
 
 
