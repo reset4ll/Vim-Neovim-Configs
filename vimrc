@@ -151,6 +151,7 @@ set ruler
 set relativenumber
 
 let no_buffers_menu=1
+let g:codedark_italics = 1  " Comentarios en itálica
 colorscheme codedark
 
 
