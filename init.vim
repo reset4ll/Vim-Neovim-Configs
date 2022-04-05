@@ -61,6 +61,9 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+" Coc Plugin
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 else
@@ -266,7 +269,7 @@ cnoreabbrev Qall qall
 
 "" NERDTree configuration
 " Start NERDTree an leave the cursor in it.
-autocmd VimEnter * NERDTree
+"autocmd VimEnter * NERDTree
 
 let g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['node_modules','\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
