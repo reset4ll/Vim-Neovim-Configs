@@ -54,6 +54,10 @@ Plug 'frazrepo/vim-rainbow'
 Plug 'airblade/vim-gitgutter'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'rust-lang/rust.vim'
+Plug 'puremourning/vimspector'
+Plug 'shirk/vim-gas'
+Plug 'wsdjeg/vim-assembly'
+Plug 'cofyc/vim-uncrustify'
 "Plug 'morhetz/gruvbox'
 
 if isdirectory('/usr/local/opt/fzf')
@@ -97,6 +101,11 @@ call plug#end()
 
 " Required:
 filetype plugin indent on
+
+" ** VIMSPECTOR **
+packadd! vimspector
+let g:vimspector_enable_mappings = 'HUMAN'
+
 
 
 "*****************************************************************************
@@ -151,7 +160,7 @@ set ruler
 set relativenumber
 
 let no_buffers_menu=1
-let g:codedark_italics = 1  " Comentarios en itálica
+let g:codedark_italics = 1  " comentarios en itálica
 colorscheme codedark
 
 
@@ -215,6 +224,17 @@ set titleold="Terminal"
 set titlestring=%F
 
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+
+" Uncrustify formater commands
+autocmd FileType c noremap <buffer> <c-f> :call Uncrustify('c')<CR>
+autocmd FileType c vnoremap <buffer> <c-f> :call RangeUncrustify('c')<CR>
+autocmd FileType cpp noremap <buffer> <c-f> :call Uncrustify('cpp')<CR>
+autocmd FileType cpp vnoremap <buffer> <c-f> :call RangeUncrustify('cpp')<CR>
+
+" clang-format style
+" map <C-w> :pyf </usr/share/clang/clang-format-11>/clang-format.py<cr>
+" imap <C-w> <c-o>:pyf </usr/share/clang/clang-format-11>/clang-format.py<cr>
+
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
@@ -281,7 +301,7 @@ let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 50
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite,*node_modules/
 nnoremap <silent> <F2> :NERDTreeFind<CR>
-nnoremap <silent> <F3> :NERDTreeToggle<CR>
+nnoremap <silent> <F7> :NERDTreeToggle<CR>
 
 " grep.vim
 nnoremap <silent> <leader>f :Rgrep<CR>
