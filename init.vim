@@ -129,7 +129,7 @@ set relativenumber
 set cino=(0:0
 
 "" Map leader to ,
-let mapleader=' '
+let mapleader=','
 
 "" Enable hidden buffers
 set hidden
