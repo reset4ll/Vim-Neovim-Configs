@@ -165,6 +165,12 @@ let no_buffers_menu=1
 let g:codedark_italics = 1 "Coloca los comentarios en itálica
 colorscheme codedark
 
+"++++++++++++++++++++++++++++++++
+" Cambia ESC key to Caps Lock Key
+" +++++++++++++++++++++++++++++++
+au BufEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+au BufLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
+
 
 " Better command line completion
 set wildmenu
@@ -199,7 +205,7 @@ endif
 "" Disable the blinking cursor.
 set gcr=a:blinkon0
 "" Coloca la linea en el cursor
-set cursorline
+set cursorline cursorcolumn
 
 au TermEnter * setlocal scrolloff=0
 au TermLeave * setlocal scrolloff=3
