@@ -160,6 +160,7 @@ let g:session_command_aliases = 1
 syntax enable
 set ruler
 set relativenumber
+set cursorline cursorcolumn
 
 let no_buffers_menu=1
 let g:codedark_italics = 1  " comentarios en itálica
