@@ -59,6 +59,8 @@ Plug 'shirk/vim-gas'
 Plug 'wsdjeg/vim-assembly'
 Plug 'cofyc/vim-uncrustify'
 "Plug 'morhetz/gruvbox'
+"Plug 'joshdick/onedark.vim'
+"Plug 'arcticicestudio/nord-vim'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -162,6 +164,13 @@ set relativenumber
 let no_buffers_menu=1
 let g:codedark_italics = 1  " comentarios en itálica
 colorscheme codedark
+
+"+++++++++++++++++++++++++++
+" Cambia ESC to CapsLock Key
+" ++++++++++++++++++++++++++
+au BufEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+au BufLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
+"++++++++++++++++
 
 
 " Better command line completion
@@ -289,7 +298,7 @@ cnoreabbrev Qall qall
 
 "" NERDTree configuration
 " Start NERDTree an leave the cursor in it.
-autocmd VimEnter * NERDTree
+"autocmd VimEnter * NERDTree
 
 "" NERDTree configuration
 let g:NERDTreeChDirMode=2
