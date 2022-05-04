@@ -55,6 +55,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'rust-lang/rust.vim'
 Plug 'cofyc/vim-uncrustify'
+Plug 'vim-scripts/indentpython.vim'
 "Plug 'morhetz/gruvbox'
 
 " Telescope plugin y plugins complementarios (solo para neovim)
