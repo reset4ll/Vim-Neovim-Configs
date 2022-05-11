@@ -1,2 +1,2 @@
-# Vim / Neovim -- Configs
+# Vim / Neovim / Alacritty -- Configs
 Configuración Vim / Neovim
