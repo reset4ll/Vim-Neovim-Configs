@@ -49,7 +49,7 @@ Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'editor-bootstrap/vim-bootstrap-updater'
 Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
-Plug 'tomasiser/vim-code-dark'
+"Plug 'tomasiser/vim-code-dark'
 Plug 'frazrepo/vim-rainbow'
 Plug 'airblade/vim-gitgutter'
 Plug 'ntpeters/vim-better-whitespace'
@@ -59,9 +59,11 @@ Plug 'shirk/vim-gas'
 Plug 'wsdjeg/vim-assembly'
 Plug 'cofyc/vim-uncrustify'
 Plug 'vim-scripts/indentpython.vim'
+"Plug 'kyoz/purify', { 'rtp': 'vim' }
 "Plug 'morhetz/gruvbox'
 "Plug 'joshdick/onedark.vim'
 "Plug 'arcticicestudio/nord-vim'
+Plug 'sainnhe/gruvbox-material'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -161,19 +163,43 @@ let g:session_command_aliases = 1
 syntax enable
 set ruler
 set relativenumber
-set cursorline cursorcolumn
-
+set cursorline
+"set guicursor+=n:hor10-Cursor/lCursor
+"set timeout timeoutlen=3000 ttimeoutlen=100
 let no_buffers_menu=1
 let g:codedark_italics = 1  " comentarios en itálica
-colorscheme codedark
+let g:onedark_termcolors=256
+set background=dark
+colorscheme gruvbox-material
+set showcmd
+" Funciona bien
 
 "+++++++++++++++++++++++++++
 " Cambia ESC to CapsLock Key
 " ++++++++++++++++++++++++++
-au BufEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-au BufLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
+"au BufEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+"au BufLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
 "++++++++++++++++
 
+" Cambia el color del cursor. Funciona en xterm/rxvt.
+
+if &term =~ "xterm\\|rxvt"
+  " use an orange cursor in insert mode
+  let &t_SI = "\<Esc>]12;orange\x7"
+  " use a red cursor otherwise
+  let &t_EI = "\<Esc>]12;red\x7"
+  silent !echo -ne "\033]12;red\007"
+  " reset cursor when vim exits
+  autocmd VimLeave * silent !echo -ne "\033]112\007"
+  " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
+endif
+
+"Evita el cambio del cursor
+if has("autocmd")
+  au InsertEnter * silent execute "!sed -i.bak -e 's/TERMINAL_CURSOR_SHAPE_BLOCK/TERMINAL_CURSOR_SHAPE_UNDERLINE/' ~/.config/xfce4/terminal/terminalrc"
+  au InsertLeave * silent execute "!sed -i.bak -e 's/TERMINAL_CURSOR_SHAPE_UNDERLINE/TERMINAL_CURSOR_SHAPE_BLOCK/' ~/.config/xfce4/terminal/terminalrc"
+  au VimLeave * silent execute "!sed -i.bak -e 's/TERMINAL_CURSOR_SHAPE_UNDERLINE/TERMINAL_CURSOR_SHAPE_BLOCK/' ~/.config/xfce4/terminal/terminalrc"
+endif
 
 " Better command line completion
 set wildmenu
@@ -218,7 +244,7 @@ endif
 
 
 "" Disable the blinking cursor.
-set gcr=a:blinkon0
+" set gcr=a:blinkon0
 
 set scrolloff=3
 

@@ -12,7 +12,7 @@ endif
 
 let g:vim_bootstrap_langs = "c"
 let g:vim_bootstrap_editor = "nvim"				" nvim or vim
-let g:vim_bootstrap_theme = "codedark"
+let g:vim_bootstrap_theme = "gruvbox-material"
 let g:vim_bootstrap_frams = ""
 
 if !filereadable(vimplug_exists)
@@ -49,16 +49,14 @@ Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'editor-bootstrap/vim-bootstrap-updater'
 Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
-Plug 'tomasiser/vim-code-dark'
+"Plug 'tomasiser/vim-code-dark'
 Plug 'frazrepo/vim-rainbow'
 Plug 'airblade/vim-gitgutter'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'rust-lang/rust.vim'
 Plug 'cofyc/vim-uncrustify'
-Plug 'vim-scripts/indentpython.vim'
-"Plug 'joshdick/onedark.vim'
-"Plug 'arcticicestudio/nord-vim'
 "Plug 'morhetz/gruvbox'
+Plug 'sainnhe/gruvbox-material'
 
 " Telescope plugin y plugins complementarios (solo para neovim)
 Plug 'nvim-lua/plenary.nvim'
@@ -162,17 +160,43 @@ let g:session_command_aliases = 1
 "*****************************************************************************
 syntax enable
 set ruler
-set number
-
+set relativenumber
+set cursorline cursorcolumn
+"set timeout timeoutlen=3000 ttimeoutlen=100
 let no_buffers_menu=1
 let g:codedark_italics = 1 "Coloca los comentarios en itálica
-colorscheme codedark
+colorscheme gruvbox-material
+set showcmd
+
+"" CURSOR
+
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0 "Evita el cambio de cursor"
+
+if has("autocmd")
+  au InsertEnter * silent execute "!sed -i.bak -e 's/TERMINAL_CURSOR_SHAPE_BLOCK/TERMINAL_CURSOR_SHAPE_UNDERLINE/' ~/.config/xfce4/terminal/terminalrc"
+  au InsertLeave * silent execute "!sed -i.bak -e 's/TERMINAL_CURSOR_SHAPE_UNDERLINE/TERMINAL_CURSOR_SHAPE_BLOCK/' ~/.config/xfce4/terminal/terminalrc"
+  au VimLeave * silent execute "!sed -i.bak -e 's/TERMINAL_CURSOR_SHAPE_UNDERLINE/TERMINAL_CURSOR_SHAPE_BLOCK/' ~/.config/xfce4/terminal/terminalrc"
+endif
 
 "++++++++++++++++++++++++++++++++
 " Cambia ESC key to Caps Lock Key
 " +++++++++++++++++++++++++++++++
-au BufEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-au BufLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
+"au BufEnter * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+"au BufLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
+
+" Cambia el color del cursor. Funciona en xterm/rxvt
+
+if &term =~ "xterm\\|rxvt"
+  " use an orange cursor in insert mode
+  let &t_SI = "\<Esc>]12;orange\x7"
+  " use a red cursor otherwise
+  let &t_EI = "\<Esc>]12;red\x7"
+  silent !echo -ne "\033]12;red\007"
+  " reset cursor when vim exits
+   autocmd VimLeave * silent !echo -ne "\033]112\007"
+  " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
+endif
+"""""""""
 
 
 " Better command line completion
@@ -203,12 +227,8 @@ else
 
 endif
 
-
-
 "" Disable the blinking cursor.
-set gcr=a:blinkon0
-"" Coloca la linea en el cursor
-set cursorline cursorcolumn
+" set gcr=a:blinkon0
 
 au TermEnter * setlocal scrolloff=0
 au TermLeave * setlocal scrolloff=3
@@ -329,11 +349,11 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 " Highlight long lines
-highlight OverLength ctermbg=green ctermfg=white guibg=#592929
+highlight OverLength ctermbg=darkgrey ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
-autocmd BufWinEnter * match OverLength /\%81v.\+/
-autocmd InsertEnter * match OverLength /\%81v.\+/
-autocmd InsertLeave * match OverLength /\%81v.\+/
+autocmd BufWinEnter * match OverLength /\%100v.\+/
+autocmd InsertEnter * match OverLength /\%100v.\+/
+autocmd InsertLeave * match OverLength /\%100v.\+/
 autocmd BufWinLeave * call clearmatches()
 
 "*****************************************************************************
@@ -343,7 +363,7 @@ if !exists('*s:setupWrapping')
   function s:setupWrapping()
     set wrap
     set wm=2
-    set textwidth=79
+    set textwidth=100
   endfunction
 endif
 
