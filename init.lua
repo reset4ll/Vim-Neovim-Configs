@@ -126,8 +126,8 @@ require('lazy').setup({
     -- See `:help indent_blankline.txt`
     main = "ibl",
     opts = {
-      char = '┊',
-      show_trailing_blankline_indent = true,
+     -- char = '┊',
+     -- show_trailing_blankline_indent = false,
     },
   },
 
@@ -170,6 +170,7 @@ require('lazy').setup({
   require 'custom.plugins.autoformat',
   require 'custom.plugins.debug',
   require 'custom.plugins.autopairs',
+  require 'custom.plugins.devicons',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
